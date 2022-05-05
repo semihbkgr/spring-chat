@@ -1,0 +1,60 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>SpringChat</title>
+</head>
+<body>
+<div>
+    <div>
+        <label for="from">From</label>
+        <input id="from">
+        <br>
+        <label for="text">Text</label>
+        <input id="text">
+        <br>
+        <label for="recipient">Recipient</label>
+        <input id="recipient">
+        <br>
+        <button id="send">Send</button>
+    </div>
+    <div id="messages">
+    </div>
+</div>
+<script th:src="@{/webjars/stomp-websocket/2.3.3-1/stomp.js}" type="text/javascript"></script>
+
+<script type="text/javascript">
+
+    class ChatMessage {
+
+        constructor(from, text, recipient) {
+            this.from = from
+            this.text = text
+            this.recipient = recipient
+        }
+
+    }
+
+    stompClient = Stomp.client("ws://localhost:9000/stomp");
+    stompClient.connect({}, function () {
+        console.log("successfully connected")
+        stompClient.subscribe('/topic/message', function (output) {
+            document.getElementById("messages").innerText += output + "\n"
+        });
+    }, function (err) {
+        console.error("error during connecting")
+    });
+
+    document.getElementById("send").onclick = function (_) {
+        var from = document.getElementById("from").value
+        var text = document.getElementById("text").value
+        var recipient = document.getElementById("recipient").value
+        var chatMessage = new ChatMessage(from, text, recipient)
+        var chatMessageJson = JSON.stringify(chatMessage)
+        stompClient.send("/app/send", null, chatMessageJson)
+    }
+
+</script>
+
+</body>
+
+</html>
