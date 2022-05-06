@@ -37,7 +37,7 @@
     stompClient = Stomp.client("ws://localhost:9000/stomp");
     stompClient.connect({}, function () {
         console.log("successfully connected")
-        stompClient.subscribe('/topic/message', function (output) {
+        stompClient.subscribe('/user/queue/messages', function (output) {
             document.getElementById("messages").innerText += output + "\n"
         });
     }, function (err) {
