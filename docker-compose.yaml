@@ -2,5 +2,37 @@ version: '3'
 services:
   redis:
     image: redis:6.2.6-alpine
+    hostname: redis
+  spring-chat-1:
+    build: .
+    image: spring-chat:1.0.0
+    depends_on:
+      - redis
+    environment:
+      SERVER_PORT: 9000
+      SPRING_REDIS_HOST: redis
+      SPRING_REDIS_PORT: 6379
     ports:
-      - "6379:6379"
+      - "9000:9000"
+  spring-chat-2:
+    build: .
+    image: spring-chat:1.0.0
+    depends_on:
+      - redis
+    environment:
+      SERVER_PORT: 9010
+      SPRING_REDIS_HOST: redis
+      SPRING_REDIS_PORT: 6379
+    ports:
+      - "9010:9010"
+  spring-chat-3:
+    build: .
+    image: spring-chat:1.0.0
+    depends_on:
+      - redis
+    environment:
+      SERVER_PORT: 9020
+      SPRING_REDIS_HOST: redis
+      SPRING_REDIS_PORT: 6379
+    ports:
+      - "9020:9020"

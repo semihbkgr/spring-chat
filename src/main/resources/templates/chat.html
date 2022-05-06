@@ -4,6 +4,7 @@
     <title>SpringChat</title>
 </head>
 <body>
+<p th:text="${port}" id="port" style="visibility: hidden"></p>
 <div>
     <div>
         <label for="from">From</label>
@@ -34,9 +35,13 @@
 
     }
 
-    stompClient = Stomp.client("ws://localhost:9000/stomp");
-    stompClient.connect({}, function () {
-        console.log("successfully connected")
+    const port = document.getElementById("port").textContent
+    stompClient = Stomp.client(`ws://localhost:${port}/stomp`);
+    stompClient.connect({}, function (res) {
+        var username = res.headers["user-name"]
+        document.getElementById("from").readOnly = true
+        document.getElementById("from").value = username
+        console.log("successfully connected - username: " + username)
         stompClient.subscribe('/user/queue/messages', function (output) {
             document.getElementById("messages").innerText += output + "\n"
         });

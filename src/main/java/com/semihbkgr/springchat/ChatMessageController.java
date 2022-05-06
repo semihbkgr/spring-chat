@@ -3,10 +3,12 @@ package com.semihbkgr.springchat;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.messaging.simp.SimpMessageHeaderAccessor;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import java.security.Principal;
@@ -19,7 +21,8 @@ public class ChatMessageController {
     private final CustomWebSocketService socketService;
 
     @GetMapping("/chat")
-    public String getWebSocketBroadcast() {
+    public String getWebSocketBroadcast(Model model, @Value("${server.port}") int port) {
+        model.addAttribute("port", port);
         return "chat";
     }
 
