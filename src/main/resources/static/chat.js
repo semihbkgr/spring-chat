@@ -1,11 +1,9 @@
 class ChatMessage {
-
     constructor(from, text, recipient) {
         this.from = from
         this.text = text
         this.recipient = recipient
     }
-
 }
 
 stompClient = Stomp.client(`ws://${location.host}/stomp`);
