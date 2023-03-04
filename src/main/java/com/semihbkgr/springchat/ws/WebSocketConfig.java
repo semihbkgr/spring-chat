@@ -1,4 +1,4 @@
-package com.semihbkgr.springchat;
+package com.semihbkgr.springchat.ws;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.messaging.simp.config.MessageBrokerRegistry;

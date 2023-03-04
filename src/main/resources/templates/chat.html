@@ -4,7 +4,6 @@
     <title>SpringChat</title>
 </head>
 <body>
-<p th:text="${port}" id="port" style="visibility: hidden"></p>
 <div>
     <div>
         <label for="from">From</label>
@@ -21,45 +20,9 @@
     <div id="messages">
     </div>
 </div>
+
 <script th:src="@{/webjars/stomp-websocket/2.3.3-1/stomp.js}" type="text/javascript"></script>
-
-<script type="text/javascript">
-
-    class ChatMessage {
-
-        constructor(from, text, recipient) {
-            this.from = from
-            this.text = text
-            this.recipient = recipient
-        }
-
-    }
-
-    const port = document.getElementById("port").textContent
-    stompClient = Stomp.client(`ws://localhost:${port}/stomp`);
-    stompClient.connect({}, function (res) {
-        var username = res.headers["user-name"]
-        document.getElementById("from").readOnly = true
-        document.getElementById("from").value = username
-        console.log("successfully connected - username: " + username)
-        stompClient.subscribe('/user/queue/messages', function (output) {
-            document.getElementById("messages").innerText += output + "\n"
-        });
-    }, function (err) {
-        console.error("error during connecting")
-    });
-
-    document.getElementById("send").onclick = function (_) {
-        var from = document.getElementById("from").value
-        var text = document.getElementById("text").value
-        var recipient = document.getElementById("recipient").value
-        var chatMessage = new ChatMessage(from, text, recipient)
-        var chatMessageJson = JSON.stringify(chatMessage)
-        stompClient.send("/app/send", null, chatMessageJson)
-    }
-
-</script>
+<script src="/chat.js" type="text/javascript"></script>
 
 </body>
-
 </html>
