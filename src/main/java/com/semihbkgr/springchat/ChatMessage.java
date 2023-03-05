@@ -1,8 +1,12 @@
 package com.semihbkgr.springchat;
 
-import lombok.Data;
+import lombok.*;
 
-@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Getter
+@Setter
+@ToString
 public class ChatMessage {
 
     private String sender;

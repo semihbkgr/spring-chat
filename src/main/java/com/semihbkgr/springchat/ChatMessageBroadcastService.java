@@ -4,6 +4,6 @@ import lombok.NonNull;
 
 public interface ChatMessageBroadcastService {
 
-    void send(@NonNull ChatMessage message);
+    void publish(@NonNull ChatMessage message);
 
 }

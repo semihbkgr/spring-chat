@@ -1,6 +1,8 @@
 spring:
   profiles:
-    active: redis
+    active:
+      - redis
+     #- hazelcast
 server:
   port: 9100
 logging:
