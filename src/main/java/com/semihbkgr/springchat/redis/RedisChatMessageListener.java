@@ -15,6 +15,7 @@ public class RedisChatMessageListener {
 
     public void onReceiveMessage(ChatMessage message) {
         log.info("on receive - {}", message);
+        simpTemplate.convertAndSendToUser(message.getSender(), "/queue/messages", message);
         simpTemplate.convertAndSendToUser(message.getRecipient(), "/queue/messages", message);
     }
 

@@ -12,7 +12,7 @@ import java.util.Map;
 import java.util.UUID;
 
 @Slf4j
-public class AppHandshakeHandler extends DefaultHandshakeHandler {
+public class PrincipalHandshakeHandler extends DefaultHandshakeHandler {
 
     @Override
     protected Principal determineUser(ServerHttpRequest request, WebSocketHandler wsHandler, Map<String, Object> attributes) {
